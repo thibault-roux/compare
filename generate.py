@@ -32,14 +32,27 @@ if refs1 != refs2:
     raise Exception("refs are not the same. Check second column of data.")
 
 
-txt = "<table>\n"
+txt = """<table>
+    <tr>
+        <td width="30"></td>
+        <td width="300"></td>
+        <td width="300"></td>
+        <td width="300"></td>
+      </tr>
+    <tr>
+		<td> <b>ID</b> </td>
+		<td> <b>Reference</b> </td>
+		<td> <b>Hypothesis 1</b> </td>
+		<td> <b>Hypothesis 2</b> </td>
+	</tr>
+"""
 for i in range(len(refs1)):
     txt += "\t<tr>\n"
     txt += "\t\t<td> " + ids1[i] + " </td>\n"
     txt += "\t\t<td> " + refs1[i] + " </td>\n"
     txt += "\t\t<td> " + hyps1[i] + " </td>\n"
     txt += "\t\t<td> " + hyps2[i] + " </td>\n"
-    txt += "</tr>"
+    txt += "\t</tr>\n"
 txt += "</table>\n"
 
 with open("html/" + filename1[:-4] + "-" + filename2[:-4] + ".html", "w", encoding="utf8") as file:
