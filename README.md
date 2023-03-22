@@ -1,2 +1,2 @@
 # compare
-Generate an html file to compare ASR output
+Generate an html file to compare ASR outputs.
