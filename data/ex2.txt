@@ -1,0 +1,5 @@
+1	hello how are you	hello wow are u	_
+2	where is bryan	there is brian	_
+3	bryan is in the kitchen	bryan is in in the kitchen	_
+4	tell him mom is waiting	tell him mom is 	_
+5	ok i am going	ok i am going	_
