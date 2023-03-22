@@ -5,15 +5,15 @@
 filename1 = "data/KD_woR.txt"
 filename2 = "data/KD_wR.txt"
 """
-filename1 = "data/ex1.txt"
-filename2 = "data/ex2.txt"
+filename1 = "ex1.txt"
+filename2 = "ex2.txt"
 
 
 def read(filename):
     ids = []
     refs = []
     hyps = []
-    with open(filename, "r", encoding="utf8") as file:
+    with open("data/" + filename, "r", encoding="utf8") as file:
         for line in file:
             line = line.split("\t")
             ids.append(line[0])
@@ -30,3 +30,19 @@ if ids1 != ids2:
 
 if refs1 != refs2:
     raise Exception("refs are not the same. Check second column of data.")
+
+
+txt = "<table>\n"
+for i in range(len(refs1)):
+    txt += "\t<tr>\n"
+    txt += "\t\t<td> " + ids1[i] + " </td>\n"
+    txt += "\t\t<td> " + refs1[i] + " </td>\n"
+    txt += "\t\t<td> " + hyps1[i] + " </td>\n"
+    txt += "\t\t<td> " + hyps2[i] + " </td>\n"
+    txt += "</tr>"
+txt += "</table>\n"
+
+with open("html/" + filename1[:-4] + "-" + filename2[:-4] + ".html", "w", encoding="utf8") as file:
+    file.write(txt)
+
+print("End of program.")
