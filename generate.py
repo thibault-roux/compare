@@ -15,18 +15,17 @@ def read(filename):
     return data
 
 
-def intersect(ids1, refs1, hyps1, ids2, refs2, hyps2):
-    new_ids = []
-    new_refs = []
-    new_hyps1 = []
-    new_hyps2 = []
+def intersect(data1, data2):
+    new_data1 = dict()
+    new_data2 = dict()
 
-    for i in range(len(ids1)):
-        if ids1[i] in ids2:
-            if refs1[i] in refs2:
-                new_ids.append(ids1[i])
-                new_refs.append(refs1[i])
-                new_hyps1.append()
+    for id, refhyp1 in data1.items():
+        if id in data2:
+            ref = refhyp[0]
+            if ref == data2[id][0]: # check if both refs are the same
+                new_data1[id] = [ref, data1[id][1]]
+                new_data2[id] = [ref, data2[id][1]]
+    return new_data1, new_data2
 
 
 if __name__ == "__main__":
@@ -40,6 +39,7 @@ if __name__ == "__main__":
     print("Loading dataset...")
     data1 = read(filename1)
     data2 = read(filename2)
+    data1, data2 = intersect(data1, data2)
 
     for k1, v1 in data1.items():
         if k1 not in data2:
