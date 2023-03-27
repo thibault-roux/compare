@@ -19,7 +19,7 @@ def intersect(data1, data2):
     new_data1 = dict()
     new_data2 = dict()
 
-    for id, refhyp1 in data1.items():
+    for id, refhyp in data1.items():
         if id in data2:
             ref = refhyp[0]
             if ref == data2[id][0]: # check if both refs are the same
@@ -54,20 +54,14 @@ if __name__ == "__main__":
 
 
 
-    txt = """<table>
-        <tr>
-            <td width="30"></td>
-            <td width="300"></td>
-            <td width="300"></td>
-            <td width="300"></td>
-        </tr>
-        <tr>
-            <td> <b>ID</b> </td>
-            <td> <b>Reference</b> </td>
-            <td> <b>Hypothesis 1</b> </td>
-            <td> <b>Hypothesis 2</b> </td>
-        </tr>
-    """
+    txt = """<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Reference</th>
+        <th>Hypothesis 1</th>
+        <th>Hypothesis 2</th>
+    </tr>
+"""
     for id, refhyp in data1.items():
         ref = refhyp[0]
         hyp1 = refhyp[1]
