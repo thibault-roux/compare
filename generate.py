@@ -62,12 +62,10 @@ def color_html(ref, hyp):
     for h, b in zip(hyp, binary_list):
         if b == 1:
             # txt += "<span style='color: green'>" + h + "</span> "
-            txt += h
+            txt += h + " "
         else:
             txt += "<span style='color: red'>" + h + "</span> "
     return txt[:-1]
-
-
 
 def read(filename):
     data = dict()
