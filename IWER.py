@@ -10,6 +10,10 @@ def IWER(ref, hyp, words):
     for i, word in enumerate(ref_aligned):
         if word in words and binary_list[i] == 0:
             errors += 1
-    return errors / len(ref)
+    return errors / len(ref.split(" ")) * 100
 
 # print(levenstein_alignment("ceci est un exemple".split(" "), "ce ceci est une exemple pas".split(" ")))
+
+
+if __name__ == "__main__":
+    print(IWER("ceci est un exemple", "ce ceci est une exemple pas", ["<epsilon>", "ce", "ceci", "est", "un", "une", "exemple", "pas"]))
