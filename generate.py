@@ -93,13 +93,9 @@ def intersect(data1, data2):
 
 
 if __name__ == "__main__":
-    filename1 = "KD_woR.txt"
-    filename2 = "KD_wR.txt"
-    """
     filename1 = "ex1.txt"
     filename2 = "ex2.txt"
-    """
-
+    
     print("Loading dataset...")
     data1 = read(filename1)
     data2 = read(filename2)
@@ -118,14 +114,7 @@ if __name__ == "__main__":
 
 
 
-    txt = """<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Reference</th>
-        <th>Hypothesis 1</th>
-        <th>Hypothesis 2</th>
-    </tr>
-"""
+    txt = """<table border="1">\n\t<tr>\n\t\t<th>ID</th>\n\t\t<th>Reference</th>\n\t\t<th>Hypothesis 1</th>\n\t\t<th>Hypothesis 2</th>\n\t</tr>\n"""
     for id, refhyp in data1.items():
         ref = refhyp[0]
         hyp1 = refhyp[1]
