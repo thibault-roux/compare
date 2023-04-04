@@ -37,28 +37,48 @@ def clean_string(string):
             string = string.replace(c, "")
     return string
 
-def load_data(filename, clean=True):
+def load_data(filename):
     refs = []
     hyps = []
     with open("data/" + filename, "r", encoding="utf8") as f:
         for line in f:
             line = line.split("\t")
-            if clean:
-                refs.append(clean_string(line[1]))
-                hyps.append(clean_string(line[2]))
-            else:
-                refs.append(line[1])
-                hyps.append(line[2])
+            refs.append(line[1])
+            hyps.append(line[2])
     return refs, hyps
 
-def wer(refs, hyps):
+def wer(refs, hyps, clean=True):
     errors_total = 0
     length_total = 0
     for ref, hyp in zip(refs, hyps):
-        errors, length = WER(ref, hyp)
+        if clean:
+            errors, length = WER(clean_string(ref), clean_string(hyp))
+        else:
+            errors, length = WER(ref, hyp)
         errors_total += errors
         length_total += length
     return errors_total / length_total * 100
+
+
+def some_wer(refs, hyps):
+    worse = 0
+    better = 0
+    equal = 0
+    for ref, hyp in zip(refs, hyps):
+        errors_clean, length_clean = WER(clean_string(ref), clean_string(hyp))
+        errors_unclean, length_unclean = WER(ref, hyp)
+        clean = errors_clean/length_clean
+        unclean = errors_unclean/length_unclean
+        if clean > unclean: # clean is worse
+            worse += 1
+        elif clean < unclean: # clean is better
+            better += 1
+        else: # clean is equal
+            equal += 1
+    print("clean worse: ", worse)
+    print("clean better: ", better)
+    print("clean equal: ", equal)
+    
 
 def iwer(refs, hyps, words):
     errors_total = 0
@@ -74,7 +94,7 @@ if __name__ == "__main__":
     # print(IWER("ceci est un exemple", "ce ceci est une exemple pas", {"<epsilon>", "ce", "ceci", "est", "un", "une", "exemple", "pas"}))
 
     refs, hyps = load_data("KD_woR.txt")
+    some_wer(refs, hyps)
+    exit()
     print(wer(refs, hyps))
-
-    refs, hyps = load_data("KD_woR.txt", clean=False)
-    print(wer(refs, hyps))
+    print(wer(refs, hyps, clean=False))
