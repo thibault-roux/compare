@@ -98,7 +98,7 @@ def iwer(refs, hyps, words):
 
 
 if __name__ == "__main__":
-    systems = ["KD_woR","KD_wR","SB_bpe1000","SB_bpe750","SB_s2s","SB_w2v_1k","SB_w2v_3k","SB_w2v_7k","SB_xlsr_fr","SB_xlsr"]
+    systems = ["KD_woR","KD_wR","SB_bpe1000","SB_bpe750","SB_s2s","SB_w2v", "SB_w2v_1k","SB_w2v_3k","SB_w2v_7k","SB_xlsr_fr","SB_xlsr"]
     with open("csv/words.pkl", "rb") as f:
         words = pickle.load(f)
 
@@ -109,6 +109,6 @@ if __name__ == "__main__":
         refs, hyps = load_data(system + "1.txt")
         txt += str(iwer(refs, hyps, words)) + "\n"
 
-    with open("results/iwer.csv", "w") as f:
+    with open("results/iwer.csv", "a") as f:
         f.write(txt)
     
