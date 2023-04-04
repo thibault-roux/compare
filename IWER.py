@@ -1,3 +1,4 @@
+import pickle
 from utils.leven import levenstein_alignment
 
 # Using the levenstein_alignment function, calculate the IWER
@@ -7,10 +8,13 @@ from utils.leven import levenstein_alignment
 def IWER(ref, hyp, words):
     ref_aligned, hyp_aligned, binary_list = levenstein_alignment(ref.split(" "), hyp.split(" "))
     errors = 0
+    length = 0
     for i, word in enumerate(ref_aligned):
-        if word in words and binary_list[i] == 0:
-            errors += 1
-    return errors, len(ref.split(" "))
+        if word in words:
+            length += 1
+            if binary_list[i] == 0:
+                errors += 1
+    return errors, length
 
 def WER(ref, hyp):
     ref_aligned, hyp_aligned, binary_list = levenstein_alignment(ref.split(" "), hyp.split(" "))
@@ -60,7 +64,7 @@ def wer(refs, hyps, clean=True):
     return errors_total / length_total * 100
 
 
-def some_wer(refs, hyps):
+def some_wer(refs, hyps): # check if cleaning improve performances
     worse = 0
     better = 0
     equal = 0
@@ -78,6 +82,8 @@ def some_wer(refs, hyps):
     print("clean worse: ", worse)
     print("clean better: ", better)
     print("clean equal: ", equal)
+    # we expected clean to be better (i.e have a lower WER)
+    # empirically, it never make results worse
     
 
 def iwer(refs, hyps, words):
@@ -87,14 +93,18 @@ def iwer(refs, hyps, words):
         errors, length = IWER(ref, hyp, words)
         errors_total += errors
         length_total += length
+    print(errors_total, length_total)
     return errors_total / length_total * 100
 
 
 if __name__ == "__main__":
-    # print(IWER("ceci est un exemple", "ce ceci est une exemple pas", {"<epsilon>", "ce", "ceci", "est", "un", "une", "exemple", "pas"}))
+    systems = ["KD_woR","KD_wR","SB_bpe1000","SB_bpe750","SB_s2s","SB_w2v_1k","SB_w2v_3k","SB_w2v_7k","SB_xlsr_fr","SB_xlsr"]
+    with open("csv/words.pkl", "rb") as f:
+        words = pickle.load(f)
 
-    refs, hyps = load_data("KD_woR.txt")
-    some_wer(refs, hyps)
-    exit()
-    print(wer(refs, hyps))
-    print(wer(refs, hyps, clean=False))
+    txt = ""
+    for system in systems: 
+        txt += system + ","
+        refs, hyps = load_data(system + ".txt")
+        txt += iwer(refs, hyps, words) + "\n"
+    
