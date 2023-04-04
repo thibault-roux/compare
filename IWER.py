@@ -106,5 +106,5 @@ if __name__ == "__main__":
     for system in systems: 
         txt += system + ","
         refs, hyps = load_data(system + ".txt")
-        txt += iwer(refs, hyps, words) + "\n"
+        txt += str(iwer(refs, hyps, words)) + "\n"
     
