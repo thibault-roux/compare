@@ -93,7 +93,7 @@ def iwer(refs, hyps, words):
         errors, length = IWER(ref, hyp, words)
         errors_total += errors
         length_total += length
-    print(errors_total, length_total)
+    # print(errors_total, length_total)
     return errors_total / length_total * 100
 
 
@@ -103,8 +103,12 @@ if __name__ == "__main__":
         words = pickle.load(f)
 
     txt = ""
-    for system in systems: 
+    for system in systems:
+        print(system)
         txt += system + ","
-        refs, hyps = load_data(system + ".txt")
+        refs, hyps = load_data(system + "1.txt")
         txt += str(iwer(refs, hyps, words)) + "\n"
+
+    with open("results/iwer.csv", "w") as f:
+        f.write(txt)
     
