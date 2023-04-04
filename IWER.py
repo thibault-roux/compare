@@ -33,7 +33,7 @@ def clean_string(string):
     string = string.replace(")", "")
     string = string.replace("-", " ")
     for c in set(string):
-        if c not in "éèêçâàîïôùûabcdefghijklmnopqrstuvwxyz0123456789'":
+        if c not in " éèêçâàîïôùûabcdefghijklmnopqrstuvwxyz0123456789'":
             string = string.replace(c, "")
     return string
 
@@ -58,7 +58,7 @@ def wer(refs, hyps):
         errors, length = WER(ref, hyp)
         errors_total += errors
         length_total += length
-    return errors_total / length_total
+    return errors_total / length_total * 100
 
 def iwer(refs, hyps, words):
     errors_total = 0
@@ -67,14 +67,14 @@ def iwer(refs, hyps, words):
         errors, length = IWER(ref, hyp, words)
         errors_total += errors
         length_total += length
-    return errors_total / length_total
+    return errors_total / length_total * 100
 
 
 if __name__ == "__main__":
     # print(IWER("ceci est un exemple", "ce ceci est une exemple pas", {"<epsilon>", "ce", "ceci", "est", "un", "une", "exemple", "pas"}))
 
-    ref, hyp = load_data("KD_woR.txt")
-    print(WER(ref, hyp))
+    refs, hyps = load_data("KD_woR.txt")
+    print(wer(refs, hyps))
 
-    ref, hyp = load_data("KD_woR.txt", clean=False)
-    print(WER(ref, hyp))
+    refs, hyps = load_data("KD_woR.txt", clean=False)
+    print(wer(refs, hyps))
