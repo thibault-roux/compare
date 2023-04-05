@@ -19,7 +19,7 @@ def color_html(ref, hyp):
 
 def read(filename):
     data = dict()
-    with open("data/" + filename, "r", encoding="utf8") as file:
+    with open("../../metrics/hypereval/data/" + filename + "/" + filename + "1.txt", "r", encoding="utf8") as file:
         for line in file:
             line = line.split("\t")
             id = line[0]
@@ -42,10 +42,7 @@ def intersect(data1, data2):
     return new_data1, new_data2
 
 
-if __name__ == "__main__":
-    filename1 = "ex1.txt"
-    filename2 = "ex2.txt"
-
+def generate_html(filename1, filename2):
     print("Loading dataset...")
     data1 = read(filename1)
     data2 = read(filename2)
@@ -61,8 +58,6 @@ if __name__ == "__main__":
             raise Exception("ids are not the same. Check first column of data.")
         if v2[0] != data1[k2][0]:
             raise Exception("refs are not the same. Check second column of data.")
-
-
 
     txt = """<table border="1">\n\t<tr>\n\t\t<th>ID</th>\n\t\t<th>Reference</th>\n\t\t<th>Hypothesis 1</th>\n\t\t<th>Hypothesis 2</th>\n\t</tr>\n"""
     for id, refhyp in data1.items():
@@ -84,3 +79,12 @@ if __name__ == "__main__":
 
 
 
+if __name__ == "__main__":
+    filename1 = "KD_woR"
+    filename2 = "KD_wR"
+    """
+    filename1 = "ex1"
+    filename2 = "ex2"
+    """
+
+    generate_html(filename1, filename2)
