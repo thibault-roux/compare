@@ -4,7 +4,7 @@ from utils.leven import levenstein_alignment
 def load_data(filename):
     refs = []
     hyps = []
-    with open("data/" + filename, "r", encoding="utf8") as f:
+    with open("../../metrics/hypereval/data/" + filename + "/" + filename + "1.txt", "r", encoding="utf8") as f:
         for line in f:
             line = line.split("\t")
             refs.append(line[1])
