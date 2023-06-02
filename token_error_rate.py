@@ -23,8 +23,8 @@ def token_error_rate(refs, hyps, sp):
     errors = 0
     length = 0
     for i, ref in enumerate(refs):
-        ref = sp.encode(ref, out_type=str, enable_sampling=False)
-        hyp = sp.encode(hyp, out_type=str, enable_sampling=False)
+        ref = sp.encode(refs[i], out_type=str, enable_sampling=False)
+        hyp = sp.encode(hyps[i], out_type=str, enable_sampling=False)
         e, l = token_error_rate_local(ref, hyp, sp)
         errors += e
         length += l
@@ -36,11 +36,11 @@ if __name__ == "__main__":
     sp = spm.SentencePieceProcessor(model_file='Tokenizer/1000_bpe.model')
 
     systems = ["KD_woR","KD_wR","SB_bpe1000","SB_bpe750","SB_s2s","SB_w2v", "SB_w2v_1k","SB_w2v_3k","SB_w2v_7k","SB_xlsr_fr","SB_xlsr"]
-    systems = ["SB_w2v_7k"]
+    systems = ["SB_w2v_7k", "SB_bpe1000","SB_bpe750"]
     txt = ""
     for system in systems:
         print(system)
         txt += system + ","
-        refs, hyps = load_data(system + "1.txt")
+        refs, hyps = load_data(system)
         ter = token_error_rate(refs, hyps, sp)
         print(ter)
