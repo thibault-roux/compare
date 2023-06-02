@@ -43,7 +43,13 @@ if __name__ == '__main__':
     hyp2_better = 0
     equal = 0
 
+    # progressbar
+    bar = progressbar.ProgressBar(maxval=len(data1))
+    iterator_bar = 0
+    
     for id, refhyp in data1.items():
+        bar.update(iterator_bar)
+        iterator_bar += 1
         if id not in data2:
             raise Exception("ids are not the same. Check first column of data.")
         if refhyp[0] != data2[id][0]:
@@ -55,10 +61,14 @@ if __name__ == '__main__':
         # compute perplexity
         perplexities = dict()
         for label, sent in {"ref": ref, "hyp1": hyp1_text, "hyp2": hyp2_text}.items():
-            if sent in sent2perplexity:
+            # print(label, sent)
+            if sent not in sent2perplexity:
                 perplexity = compute_perplexity(ref, tokenizer, model)
                 sent2perplexity[sent] = perplexity
                 perplexities[label] = perplexity
+            else:
+                perplexities[label] = sent2perplexity[sent]
+        # print(perplexities)
         if perplexities["hyp1"] < perplexities["hyp2"]:
             hyp1_better += 1
         elif perplexities["hyp1"] > perplexities["hyp2"]:
