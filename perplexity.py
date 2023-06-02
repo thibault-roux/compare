@@ -30,7 +30,12 @@ if __name__ == '__main__':
     tokenizer = GPT2Tokenizer.from_pretrained(model_name)
     model = GPT2LMHeadModel.from_pretrained(model_name)
 
-    sent2perplexity = dict()
+    # if file exists, load it
+    try:
+        with open("pickle/perplexities.pkl", "rb") as file:
+            sent2perplexity = pickle.load(file)
+    except FileNotFoundError:
+        sent2perplexity = dict()
 
     filename1 = "SB_bpe1000"
     filename2 = "SB_w2v_7k"
@@ -63,18 +68,20 @@ if __name__ == '__main__':
         for label, sent in {"ref": ref, "hyp1": hyp1_text, "hyp2": hyp2_text}.items():
             # print(label, sent)
             if sent not in sent2perplexity:
-                perplexity = compute_perplexity(ref, tokenizer, model)
-                sent2perplexity[sent] = perplexity
-                perplexities[label] = perplexity
+                perplexity_val = compute_perplexity(sent, tokenizer, model)
+                sent2perplexity[sent] = perplexity_val # check why is it returned nan values??
+                perplexities[label] = perplexity_val
+                print(perplexity_val)
             else:
                 perplexities[label] = sent2perplexity[sent]
-        # print(perplexities)
+        print(perplexities)
         if perplexities["hyp1"] < perplexities["hyp2"]:
             hyp1_better += 1
         elif perplexities["hyp1"] > perplexities["hyp2"]:
             hyp2_better += 1
         else:
             equal += 1
+        break
     
     # save in pickle perplexities
     with open("pickle/perplexities.pkl", "wb") as file:
