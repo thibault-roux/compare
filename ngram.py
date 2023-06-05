@@ -36,16 +36,13 @@ def compute_probability(sentence, probs, n, occ): # probs is a dict of probabili
                 proba = 0
             probabilities.append(proba)
     try:
-        retour = sum(probabilities)/len(probabilities)
+        return sum(probabilities)/len(probabilities)
     except ZeroDivisionError:
-        print("sentence:", sentence)
-        print("probabilities:", probabilities)
-        raise
-    return retour
+        return 0
 
 if __name__ == "__main__":
-    filename1 = "SB_bpe750" # bpe 750
-    name1 = "bpe 750"
+    filename1 = "SB_bpe1000" # bpe 1000
+    name1 = "bpe 1000"
     filename2 = "SB_w2v_7k" # char
     name2 = "char"
     data1 = read(filename1)
