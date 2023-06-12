@@ -40,11 +40,7 @@ def compute_probability(sentence, probs, n, occ): # probs is a dict of probabili
     except ZeroDivisionError:
         return 0
 
-if __name__ == "__main__":
-    filename1 = "SB_bpe1000" # bpe 1000
-    name1 = "bpe 1000"
-    filename2 = "SB_w2v_7k" # char
-    name2 = "char"
+def evaluate(filename1, filename2, name1, name2):
     data1 = read(filename1)
     data2 = read(filename2)
     data1, data2 = intersect(data1, data2)
@@ -90,3 +86,16 @@ if __name__ == "__main__":
     print(name1, "better: ", hyp1_better)
     print(name2, "better: ", hyp2_better)
     print("equal: ", equal)
+
+
+if __name__ == "__main__":
+    # in the future, compute different probabilities with different n-grams values
+
+    filename1 = "SB_bpe1000" # bpe 1000
+    name1 = "bpe 1000"
+    filename2 = "SB_w2v_7k" # char
+    name2 = "char"
+
+    evaluate(filename1, filename2, name1, name2)
+
+    
