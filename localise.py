@@ -46,14 +46,31 @@ if __name__ == "__main__":
     cer_dict["char"] = []
     cer_dict["bpe1000"] = []
     cer_dict["bpe750"] = []
+    cer_dict["difference"] = [] # difference between char and bpe1000
     for id, refhyp in data["char"].items():
         cer_dict["char"].append(cer(data["char"][id][0], data["char"][id][1]))
         cer_dict["bpe1000"].append(cer(data["bpe1000"][id][0], data["bpe1000"][id][1]))
         cer_dict["bpe750"].append(cer(data["bpe750"][id][0], data["bpe750"][id][1]))
+        cer_dict["difference"].append(np.abs(cer_dict["char"][-1] - cer_dict["bpe1000"][-1]))
+
+
+    """# Not humanly checked
+    # sort by difference
+    sorted_cer_dict = dict()
+    sorted_cer_dict["char"] = []
+    sorted_cer_dict["bpe1000"] = []
+    sorted_cer_dict["bpe750"] = []
+    sorted_cer_dict["difference"] = []
+    sorted_cer_dict["id"] = []
+    for i, diff in enumerate(sorted(cer_dict["difference"])): # sort by difference
+        sorted_cer_dict["char"].append(cer_dict["char"][i])
+        sorted_cer_dict["bpe1000"].append(cer_dict["bpe1000"][i])
+        sorted_cer_dict["bpe750"].append(cer_dict["bpe750"][i])
+        sorted_cer_dict["difference"].append(cer_dict["difference"][i])
+        sorted_cer_dict["id"].append(i)"""
+
 
     # plot
-    print(plt.style.available)
-    input()
     plt.style.use('seaborn-whitegrid')
     step = 120
     start = 1
@@ -61,7 +78,14 @@ if __name__ == "__main__":
     plt.scatter(y, cer_dict["char"][start::step], s=20, label="char")
     plt.scatter(y, cer_dict["bpe1000"][start::step], s=20, label="bpe1000")
     plt.scatter(y, cer_dict["bpe750"][start::step], s=20, label="bpe750")
+    plt.scatter(y, cer_dict["difference"][start::step], s=20, label="difference")
     plt.legend()
     plt.show()
 
     plt.savefig("results/localise.png")
+
+
+    # future work are the following
+    # 1) plot the difference between char and bpe1000 sorted by the difference
+    # 2) print sentences produced by char that are way better than bpe1000
+    # and print sentences produced by bpe1000 that are way better than char
