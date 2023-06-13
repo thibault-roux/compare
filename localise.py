@@ -2,6 +2,7 @@ from utils.io import read, intersect
 import pickle
 from jiwer import cer
 import matplotlib.pyplot as plt
+import numpy as np
 
 def getdata():
     # check if pickle exists
@@ -51,11 +52,16 @@ if __name__ == "__main__":
         cer_dict["bpe750"].append(cer(data["bpe750"][id][0], data["bpe750"][id][1]))
 
     # plot
-    plt.plot(cer_dict["char"], label="char")
-    plt.plot(cer_dict["bpe1000"], label="bpe1000")
-    plt.plot(cer_dict["bpe750"], label="bpe750")
+    print(plt.style.available)
+    input()
+    plt.style.use('seaborn-whitegrid')
+    step = 120
+    start = 1
+    y = np.arange(0, len(cer_dict["char"]), step)
+    plt.scatter(y, cer_dict["char"][start::step], s=20, label="char")
+    plt.scatter(y, cer_dict["bpe1000"][start::step], s=20, label="bpe1000")
+    plt.scatter(y, cer_dict["bpe750"][start::step], s=20, label="bpe750")
     plt.legend()
     plt.show()
 
     plt.savefig("results/localise.png")
-    
