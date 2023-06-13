@@ -1,6 +1,7 @@
 from utils.io import read, intersect
 import pickle
 from jiwer import cer
+import matplotlib.pyplot as plt
 
 def getdata():
     # check if pickle exists
@@ -44,7 +45,17 @@ if __name__ == "__main__":
     cer_dict["char"] = []
     cer_dict["bpe1000"] = []
     cer_dict["bpe750"] = []
-    for id, refhyp in chardata.items():
-        pass
+    for id, refhyp in data["char"].items():
+        cer_dict["char"].append(cer(data["char"][id][0], data["char"][id][1]))
+        cer_dict["bpe1000"].append(cer(data["bpe1000"][id][0], data["bpe1000"][id][1]))
+        cer_dict["bpe750"].append(cer(data["bpe750"][id][0], data["bpe750"][id][1]))
 
+    # plot
+    plt.plot(cer_dict["char"], label="char")
+    plt.plot(cer_dict["bpe1000"], label="bpe1000")
+    plt.plot(cer_dict["bpe750"], label="bpe750")
+    plt.legend()
+    plt.show()
+
+    plt.savefig("results/localise.png")
     
