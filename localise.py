@@ -1,11 +1,12 @@
 from utils.io import read, intersect
 import pickle
+from jiwer import cer
 
 def getdata():
     # check if pickle exists
     try:
         with open("pickle/localise.pkl", "rb") as file:
-            chardata, bpe1000data, bpe750data = pickle.load(file)
+            data = pickle.load(file)
             return chardata, bpe1000data, bpe750data
     except:    
         charfile = "SB_w2v_7k"
@@ -22,15 +23,28 @@ def getdata():
         chardata, bpe750data = intersect(chardata, bpe750data)
         bpe1000data, bpe750data = intersect(bpe1000data, bpe750data)
 
+        data = dict()
+        data["char"] = chardata
+        data["bpe1000"] = bpe1000data
+        data["bpe750"] = bpe750data
+
         # save pickle
         with open("pickle/localise.pkl", "wb") as file:
-            pickle.dump((chardata, bpe1000data, bpe750data), file)
+            pickle.dump(data, file)
 
-    return chardata, bpe1000data, bpe750data
+    return data
 
 
 
 if __name__ == "__main__":
-    chardata, bpe1000data, bpe750data = getdata()
+    data = getdata()
+
+    # now we loaded the data, we can plot lines of CER for each sentence
+    cer_dict = dict()
+    cer_dict["char"] = []
+    cer_dict["bpe1000"] = []
+    cer_dict["bpe750"] = []
+    for id, refhyp in chardata.items():
+        pass
 
     
