@@ -37,8 +37,7 @@ def getdata():
     return data
 
 
-
-if __name__ == "__main__":
+def old():
     data = getdata()
 
     # now we loaded the data, we can plot lines of CER for each sentence
@@ -69,6 +68,9 @@ if __name__ == "__main__":
         sorted_cer_dict["difference"].append(cer_dict["difference"][i])
         sorted_cer_dict["id"].append(i)"""
 
+    for i in range(len(cer_dict["difference"])):
+        if cer_dict["difference"][i] < 0: # to continue
+            pass
 
     # plot
     plt.style.use('seaborn-whitegrid')
@@ -89,3 +91,20 @@ if __name__ == "__main__":
     # 1) plot the difference between char and bpe1000 sorted by the difference
     # 2) print sentences produced by char that are way better than bpe1000
     # and print sentences produced by bpe1000 that are way better than char
+
+
+
+def print_different():
+    data = getdata()
+
+    name1 = "char"
+    name2 = "bpe1000"
+
+    differences = []
+    for id, refhyp in data[name1].items():
+        differences.append(cer(data["char"][id][1], data["char"][id][1]))
+
+
+    
+if __name__ == "__main__":
+    print_different()
