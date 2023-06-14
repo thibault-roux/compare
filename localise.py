@@ -104,6 +104,10 @@ def print_different():
     for id, refhyp in data[name1].items():
         differences.append(cer(data["char"][id][1], data["char"][id][1]))
 
+    # plot differences histogram
+    plt.hist(differences, bins=100)
+    plt.show()
+    plt.savefig("results/localise_hist.png")
 
     
 if __name__ == "__main__":
