@@ -101,11 +101,15 @@ def print_different():
     name2 = "bpe1000"
 
     differences = []
+    print("Computing CER...")
     for id, refhyp in data[name1].items():
-        differences.append(cer(data["char"][id][1], data["char"][id][1]))
+        differences.append(cer(data[name1][id][1], data[name2][id][1]))
+    print("Done.")
 
-    # plot differences histogram
+    # plot differences histogram only in axis x between 0 and 1
+    plt.style.use('seaborn-whitegrid')
     plt.hist(differences, bins=100)
+    plt.xlim(0, 1)
     plt.show()
     plt.savefig("results/localise_hist.png")
 
