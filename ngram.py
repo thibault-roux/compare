@@ -74,11 +74,12 @@ def evaluate(filename1, filename2, name1, name2):
         probability1 = compute_probability(sentence, probs, n, occ)
         sentence = data2[id][1]
         probability2 = compute_probability(sentence, probs, n, occ)
+        print(probability1 - probability2)
 
         # update counter
-        if probability1 < probability2:
+        if probability1 > probability2:
             hyp1_better += 1
-        elif probability1 > probability2:
+        elif probability1 < probability2:
             hyp2_better += 1
         else:
             equal += 1
@@ -93,8 +94,8 @@ if __name__ == "__main__":
 
     filename1 = "SB_bpe1000" # bpe 1000
     name1 = "bpe 1000"
-    filename2 = "SB_w2v_7k" # char
-    name2 = "char"
+    filename2 = "SB_bpe750" # char
+    name2 = "bpe 750"
 
     evaluate(filename1, filename2, name1, name2)
 
