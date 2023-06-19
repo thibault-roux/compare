@@ -3,11 +3,10 @@ from utils.io import read, intersect
 
 # this code has the purpose to study the most common words in the reference
 
-def common_words(data):
-
+def common_words(data, filename):
     words1 = dict()
     for id, refhyp in data1.items():
-        for word in refhyp.split(" "):
+        for word in refhyp[0].split(" "):
             if word in words1:
                 words1[word] += 1
             else:
@@ -15,7 +14,9 @@ def common_words(data):
 
     # sort words by frequency
     words2 = OrderedDict(sorted(words1.items(), key=lambda x: x[1], reverse=True))
-
+    with open("results/" + filename + "_common_words.txt", "a", encoding="utf8") as file:
+        for word, freq in words2.items():
+            file.write(word + "\t" + str(freq) + "\n")
     
 
 
@@ -30,6 +31,6 @@ if __name__ == "__main__":
     data1, data3 = intersect(data1, data3)
     data2, data3 = intersect(data2, data3)
 
-    common_words(data1)
-    common_words(data2)
-    common_words(data3)
+    common_words(data1, filename1)
+    common_words(data2, filename2)
+    common_words(data3, filename3)
