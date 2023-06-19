@@ -20,6 +20,7 @@ def count_error_type(filename):
                     dels += 1
                 elif error == "=":
                     egal += 1
+    print(sub + dels + egal)
     return sub, ins, dels, egal
 
 

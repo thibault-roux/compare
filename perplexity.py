@@ -19,6 +19,10 @@ def compute_perplexity(sentence, tokenizer, model):
     # Calculate perplexity
     perplexity = torch.exp(loss)
 
+    print()
+    print(perplexities)
+    input()
+
     return perplexity.item()
 
 
@@ -68,10 +72,12 @@ if __name__ == '__main__':
         for label, sent in {"ref": ref, "hyp1": hyp1_text, "hyp2": hyp2_text}.items():
             # print(label, sent)
             if sent not in sent2perplexity:
-                perplexity_val = compute_perplexity(sent, tokenizer, model)
-                sent2perplexity[sent] = perplexity_val # check why is it returned nan values??
+                perplexity_val = compute_perplexity(sent, tokenizer, model) # check why is it returning nan values??
+                print()
+                print()
+                print("this:", sent, perplexity_val) # val is nan
+                sent2perplexity[sent] = perplexity_val 
                 perplexities[label] = perplexity_val
-                print(perplexity_val)
             else:
                 perplexities[label] = sent2perplexity[sent]
         print(perplexities)
@@ -81,7 +87,7 @@ if __name__ == '__main__':
             hyp2_better += 1
         else:
             equal += 1
-        break
+        exit(-1)
     
     # save in pickle perplexities
     with open("pickle/perplexities.pkl", "wb") as file:

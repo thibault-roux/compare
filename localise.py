@@ -100,16 +100,28 @@ def print_different():
     name1 = "char"
     name2 = "bpe1000"
 
+    counter = 0
     differences = []
     print("Computing CER...")
     for id, refhyp in data[name1].items():
-        differences.append(cer(data[name1][id][1], data[name2][id][1]))
+        c = cer(data[name1][id][1], data[name2][id][1]) # cases where hypothesis are very different
+        if c != 0:
+            differences.append(c)
+            if c > 0.6 and len(data[name1][id][0]) > 10:
+                counter += 1
+                print("CER:", c)
+                print("Ref:", data[name1][id][0])
+                print("Hyp1:", data[name1][id][1])
+                print("Hyp2:", data[name2][id][1])
+                input()
     print("Done.")
+
+    print("Percent of sentences with CER > 0.6:", int(counter/len(differences)*10000)/100, "%")
 
     # plot differences histogram only in axis x between 0 and 1
     plt.style.use('seaborn-whitegrid')
-    plt.hist(differences, bins=100)
-    plt.xlim(0, 1)
+    plt.hist(differences, bins=1000)
+    plt.xlim(0, 0.15)
     plt.show()
     plt.savefig("results/localise_hist.png")
 

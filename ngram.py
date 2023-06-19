@@ -124,7 +124,7 @@ if __name__ == "__main__":
     probs, occ = train_ngram(data_train, n)
     sentence1 = "salut tu vas bien"
     probability1 = compute_probability(sentence1, probs, n, occ)
-    sentence2 = "salut tu vas bien"
+    sentence2 = "saldt uu vadqiffn"
     probability2 = compute_probability(sentence2, probs, n, occ)
     print(sentence1, probability1)
     print(sentence2, probability2)

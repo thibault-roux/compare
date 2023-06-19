@@ -44,12 +44,17 @@ def character_rate(filename):
     for k, v in occ.items():
         try:
             print(k, v, err[k]) # keyError: '7'
-        except KeyError():
+        except KeyError:
             print(k, v, 0, "KeyError")
+
 
     # store in a pickle file the occ
     with open("pickle/" + filename + "_occ.pkl", "wb") as file:
         pickle.dump(occ, file)
+    
+    # store in a pickle file the err
+    with open("pickle/" + filename + "_err.pkl", "wb") as file:
+        pickle.dump(err, file)
 
 
 def check(filename):
@@ -62,13 +67,6 @@ if __name__ == "__main__":
     # filename1 = "KD_woR"
     # filename2 = "KD_wR"
 
-    check("SB_w2v_7k")
-
-    exit(-1)
-
-
-    # character_rate(filename1)
-    #character_rate("SB_w2v_7k")
-    character_rate("SB_bpe750")
-    character_rate("SB_bpe1000")
-    # long à calculer, vérifier pourquoi ?
+    # character_rate("SB_w2v_7k")
+    # character_rate("SB_bpe750")
+    # character_rate("SB_bpe1000")
