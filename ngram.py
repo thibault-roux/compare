@@ -108,6 +108,33 @@ def evaluate(filename1, filename2, name1, name2, words=False):
 if __name__ == "__main__":
     # in the future, compute different probabilities with different n-grams values
 
+
+
+    print("Loading data...")
+    """# get references
+    refs = []
+    for id, refhyp in data1.items():
+        refs.append(refhyp[0])"""
+    with open("/users/troux/these/expe/end-to-end/asr_model/LM/data/train.txt", "r", encoding="utf8") as file:
+        data_train = []
+        for ligne in file:
+            data_train.append(ligne[:-1].lower())    
+    print("Training ngram...")
+    n = 1
+    probs, occ = train_ngram(data_train, n)
+    sentence1 = "salut tu vas bien"
+    probability1 = compute_probability(sentence1, probs, n, occ)
+    sentence2 = "salut tu vas bien"
+    probability2 = compute_probability(sentence2, probs, n, occ)
+    print(sentence1, probability1)
+    print(sentence2, probability2)
+
+
+
+    exit(-1)
+
+
+
     words = True # if True, compute probabilities with words, else with characters
 
     filename1 = "SB_bpe1000" # bpe 1000
