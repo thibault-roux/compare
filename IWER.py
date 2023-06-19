@@ -97,10 +97,22 @@ def iwer(refs, hyps, words):
     return errors_total / length_total * 100
 
 
+def select_words():
+    words = set()
+    with open("csv/words.txt", "r", encoding="utf8") as f:
+        for line in f:
+            words.add(line.strip())
+    return words
+
 if __name__ == "__main__":
     systems = ["KD_woR","KD_wR","SB_bpe1000","SB_bpe750","SB_s2s","SB_w2v", "SB_w2v_1k","SB_w2v_3k","SB_w2v_7k","SB_xlsr_fr","SB_xlsr"]
+    
+    """
     with open("csv/words.pkl", "rb") as f:
         words = pickle.load(f)
+    """
+
+    words = select_words()
 
     txt = ""
     for system in systems:
