@@ -99,7 +99,7 @@ def iwer(refs, hyps, words):
 
 def select_words(filename):
     words = set()
-    with open("data/" + filename, "r", encoding="utf8") as f:
+    with open("data/" + filename + ".txt", "r", encoding="utf8") as f:
         for line in f:
             words.add(line.strip())
     return words
@@ -118,10 +118,10 @@ def eval_on(filename):
     for system in systems:
         print(system)
         txt += system + ","
-        refs, hyps = load_data(system + "1.txt")
+        refs, hyps = load_data(system)
         txt += str(iwer(refs, hyps, words)) + "\n"
 
-    with open("results/IWERiwer_" + filename + ".csv", "a") as f:
+    with open("results/IWERiwer_" + filename + ".txt", "w") as f:
         f.write(txt)
     
 
