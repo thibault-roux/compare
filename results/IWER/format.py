@@ -11,7 +11,7 @@ for file in files:
             system, iwer = line.strip().split(",")
             results[file][system] = float(iwer)
 
-with open("total.txt", "w") as f:
+with open("total.csv", "w") as f:
     txt = "systems,"
     for file in files:
         txt += file + ","
