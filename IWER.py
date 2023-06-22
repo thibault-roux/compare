@@ -105,7 +105,8 @@ def select_words(filename):
     return words
 
 def eval_on(filename):
-    systems = ["KD_woR","KD_wR","SB_bpe1000","SB_bpe750","SB_s2s","SB_w2v", "SB_w2v_1k","SB_w2v_3k","SB_w2v_7k","SB_xlsr_fr","SB_xlsr"]
+    # systems = ["KD_woR","KD_wR","SB_bpe1000","SB_bpe750","SB_s2s","SB_w2v", "SB_w2v_1k","SB_w2v_3k","SB_w2v_7k","SB_xlsr_fr","SB_xlsr"]
+    systems = ["SB_bpe1000","SB_bpe750", "SB_bpe500", "SB_bpe250", "SB_w2v_7k"]
     
     """
     with open("csv/words.pkl", "rb") as f:
@@ -121,7 +122,7 @@ def eval_on(filename):
         refs, hyps = load_data(system)
         txt += str(iwer(refs, hyps, words)) + "\n"
 
-    with open("results/IWERiwer_" + filename + ".txt", "w") as f:
+    with open("results/IWER/iwer_" + filename + ".txt", "w") as f:
         f.write(txt)
     
 
