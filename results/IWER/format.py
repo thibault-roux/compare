@@ -12,9 +12,20 @@ for file in files:
             results[file][system] = float(iwer)
 
 with open("total.txt", "w") as f:
-    file.write(",")
+    txt = "systems,"
     for file in files:
-        f.write(file + "\n")
-        for system in systems:
-            f.write(system + ": " + str(results[file][system]) + "\n")
-        f.write("\n")
+        txt += file + ","
+    txt = txt[:-1] + "\n"
+    for system in systems:
+        txt += system + ","
+        for file in files:
+            txt += str(results[file][system]) + ","
+        txt = txt[:-1] + "\n"
+    f.write(txt)
+
+
+# systems, iwer_fr, iwer_ment, iwer_tant, iwer_tion
+# SB_bpe1000, 0.0, 0.0, 0.0, 0.0
+# SB_bpe750, 0.0, 0.0, 0.0, 0.0
+# SB_bpe500, 0.0, 0.0, 0.0, 0.0
+# SB_bpe250, 0.0, 0.0, 0.0, 0.0
