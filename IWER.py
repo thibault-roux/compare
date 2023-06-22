@@ -108,12 +108,11 @@ def eval_on(filename):
     # systems = ["KD_woR","KD_wR","SB_bpe1000","SB_bpe750","SB_s2s","SB_w2v", "SB_w2v_1k","SB_w2v_3k","SB_w2v_7k","SB_xlsr_fr","SB_xlsr"]
     systems = ["SB_bpe1000","SB_bpe750", "SB_bpe500", "SB_bpe250", "SB_w2v_7k"]
     
-    """
-    with open("csv/words.pkl", "rb") as f:
-        words = pickle.load(f)
-    """
-
-    words = select_words(filename)
+    if filename == "ALL":
+        with open("csv/words.pkl", "rb") as f:
+            words = pickle.load(f)
+    else:
+        words = select_words(filename)
 
     txt = ""
     for system in systems:
@@ -127,7 +126,9 @@ def eval_on(filename):
     
 
 if __name__ == "__main__":
-    eval_on("words_tion")
-    eval_on("words_fr")
-    eval_on("words_ment")
-    eval_on("words_tant")
+    # eval_on("words_tion")
+    # eval_on("words_fr")
+    # eval_on("words_ment")
+    # eval_on("words_tant")
+
+    eval_on("ALL")
