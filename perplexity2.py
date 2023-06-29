@@ -1,5 +1,7 @@
 from utils.io import read, intersect
 
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
 
 
 def compute_probability(sentence, tokenizer, model):
