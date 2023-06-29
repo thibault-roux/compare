@@ -2,7 +2,7 @@ from utils.io import read, intersect
 
 
 
-def compute_perplexity(sentence, tokenizer, model):
+def compute_probability(sentence, tokenizer, model):
     # Tokenize the input sentence
     inputs = tokenizer.encode(sentence, return_tensors='pt')
 
@@ -13,10 +13,6 @@ def compute_perplexity(sentence, tokenizer, model):
 
     # Calculate perplexity
     perplexity = torch.exp(loss)
-
-    print()
-    print(perplexities)
-    input()
 
     return perplexity.item()
 
@@ -41,9 +37,9 @@ def evaluate(filename1, filename2, name1, name2, words=False):
 
         # compute probability
         sentence = refhyp[1]
-        probability1 = compute_probability(sentence, probs, n, occ, words=words)
+        probability1 = compute_probability(sentence, tokenizer, model)
         sentence = data2[id][1]
-        probability2 = compute_probability(sentence, probs, n, occ, words=words)
+        probability2 = compute_probability(sentence, tokenizer, model)
         if probability1 < 0 or probability2 < 0 or probability1 > 1 or probability2 > 1:
             raise Exception("probability is not between 0 and 1")
         # print(probability1 - probability2)
@@ -64,24 +60,14 @@ def evaluate(filename1, filename2, name1, name2, words=False):
 if __name__ == "__main__":
     # in the future, compute different probabilities with different n-grams values
 
+    model_name = "asi/gpt-fr-cased-small"
+    tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+    model = GPT2LMHeadModel.from_pretrained(model_name)
 
-
-    print("Loading data...")
-    """# get references
-    refs = []
-    for id, refhyp in data1.items():
-        refs.append(refhyp[0])"""
-    with open("/users/troux/these/expe/end-to-end/asr_model/LM/data/train.txt", "r", encoding="utf8") as file:
-        data_train = []
-        for ligne in file:
-            data_train.append(ligne[:-1].lower())    
-    print("Training ngram...")
-    n = 1
-    probs, occ = train_ngram(data_train, n)
     sentence1 = "salut tu vas bien"
-    probability1 = compute_probability(sentence1, probs, n, occ)
+    probability1 = compute_probability(sentence1, tokenizer, model)
     sentence2 = "saldt uu vadqiffn"
-    probability2 = compute_probability(sentence2, probs, n, occ)
+    probability2 = compute_probability(sentence2, tokenizer, model)
     print(sentence1, probability1)
     print(sentence2, probability2)
 
