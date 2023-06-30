@@ -3,6 +3,8 @@ from utils.io import read, intersect
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
 import torch
 
+import progressbar
+
 
 
 def compute_probability(sentence, tokenizer, model): # instead of probability, we compute the perplexity projected between 1 and 0 with the function 1/(1+p)
@@ -30,7 +32,13 @@ def evaluate(filename1, filename2, name1, name2):
     hyp2_more_probable = 0
     equal = 0
 
+    # progressbar
+    bar = progressbar.ProgressBar(maxval=len(data1))
+    iterator_bar = 0
+
     for id, refhyp in data1.items():
+        bar.update(iterator_bar)
+        iterator_bar += 1
         if id not in data2:
             raise Exception("ids are not the same. Check first column of data.")
         if refhyp[0] != data2[id][0]:

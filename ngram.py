@@ -52,7 +52,7 @@ def compute_probability(sentence, probs, n, occ, words=False): # probs is a dict
     except ZeroDivisionError:
         return 0
 
-def evaluate(filename1, filename2, name1, name2, words=False):
+def evaluate(filename1, filename2, name1, name2, n=1, words=False):
     data1 = read(filename1)
     data2 = read(filename2)
     data1, data2 = intersect(data1, data2)
@@ -68,7 +68,6 @@ def evaluate(filename1, filename2, name1, name2, words=False):
             data_train.append(ligne[:-1].lower())
     
     print("Training ngram...")
-    n = 1
     probs, occ = train_ngram(data_train, n, words=words)
     # compteur
     hyp1_more_probable = 0
@@ -136,26 +135,29 @@ if __name__ == "__main__":
 
     words = False # if True, compute probabilities with words, else with characters
 
-    filename1 = "SB_bpe1000" # bpe 1000
-    name1 = "bpe 1000"
-    filename2 = "SB_w2v_7k" # char
-    name2 = "char"
-    evaluate(filename1, filename2, name1, name2, words=words)
-    print("---------------------")
+    for n in range(1,6):
+        print("n = ", n)
+        
+        filename1 = "SB_bpe1000" # bpe 1000
+        name1 = "bpe 1000"
+        filename2 = "SB_w2v_7k" # char
+        name2 = "char"
+        evaluate(filename1, filename2, name1, name2, n, words=words)
+        print("---------------------")
 
-    exit(-1)
 
+        filename1 = "SB_bpe750" # bpe 750
+        name1 = "bpe 750"
+        filename2 = "SB_w2v_7k" # char
+        name2 = "char"
+        evaluate(filename1, filename2, name1, name2, n, words=words)
+        print("---------------------")
 
-    filename1 = "SB_bpe750" # bpe 750
-    name1 = "bpe 750"
-    filename2 = "SB_w2v_7k" # char
-    name2 = "char"
-    evaluate(filename1, filename2, name1, name2, words=words)
-    print("---------------------")
-
-    filename1 = "SB_bpe1000" # bpe 1000
-    name1 = "bpe 1000"
-    filename2 = "SB_bpe750" # bpe 750
-    name2 = "bpe 750"
-    evaluate(filename1, filename2, name1, name2, words=words)
-    print("---------------------")
+        filename1 = "SB_bpe1000" # bpe 1000
+        name1 = "bpe 1000"
+        filename2 = "SB_bpe750" # bpe 750
+        name2 = "bpe 750"
+        evaluate(filename1, filename2, name1, name2, n, words=words)
+        print("---------------------")
+        
+        input()
