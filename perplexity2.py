@@ -36,6 +36,7 @@ def evaluate(filename1, filename2, name1, name2):
         if refhyp[0] != data2[id][0]:
             raise Exception("ids are not the same. Check first column of data.")
         if refhyp[1] == data2[id][1]:
+            equal += 1
             continue
 
         # compute probability

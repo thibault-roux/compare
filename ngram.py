@@ -75,12 +75,14 @@ def evaluate(filename1, filename2, name1, name2, words=False):
     hyp2_more_probable = 0
     equal = 0
 
+    print(len(data1), len(data2))
     for id, refhyp in data1.items():
         if id not in data2:
             raise Exception("ids are not the same. Check first column of data.")
         if refhyp[0] != data2[id][0]:
             raise Exception("ids are not the same. Check first column of data.")
         if refhyp[1] == data2[id][1]:
+            equal += 1
             continue
 
         # compute probability
@@ -109,12 +111,12 @@ if __name__ == "__main__":
     # in the future, compute different probabilities with different n-grams values
 
 
-
+    """
     print("Loading data...")
-    """# get references
-    refs = []
-    for id, refhyp in data1.items():
-        refs.append(refhyp[0])"""
+    # get references
+    # refs = []
+    # for id, refhyp in data1.items():
+    #     refs.append(refhyp[0])
     with open("/users/troux/these/expe/end-to-end/asr_model/LM/data/train.txt", "r", encoding="utf8") as file:
         data_train = []
         for ligne in file:
@@ -128,14 +130,11 @@ if __name__ == "__main__":
     probability2 = compute_probability(sentence2, probs, n, occ)
     print(sentence1, probability1)
     print(sentence2, probability2)
+    exit(-1)"""
 
 
 
-    exit(-1)
-
-
-
-    words = True # if True, compute probabilities with words, else with characters
+    words = False # if True, compute probabilities with words, else with characters
 
     filename1 = "SB_bpe1000" # bpe 1000
     name1 = "bpe 1000"
