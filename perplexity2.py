@@ -5,7 +5,7 @@ import torch
 
 
 
-def compute_probability(sentence, tokenizer, model):
+def compute_probability(sentence, tokenizer, model): # instead of probability, we compute the perplexity projected between 1 and 0 with the function 1/(1+p)
     # Tokenize the input sentence
     inputs = tokenizer.encode(sentence, return_tensors='pt')
 
@@ -17,9 +17,9 @@ def compute_probability(sentence, tokenizer, model):
     # Calculate perplexity
     perplexity = torch.exp(loss)
 
-    return perplexity.item()
+    return 1/(1+perplexity.item())
 
-def evaluate(filename1, filename2, name1, name2, words=False):
+def evaluate(filename1, filename2, name1, name2):
     data1 = read(filename1)
     data2 = read(filename2)
     data1, data2 = intersect(data1, data2)
@@ -67,41 +67,31 @@ if __name__ == "__main__":
     tokenizer = GPT2Tokenizer.from_pretrained(model_name)
     model = GPT2LMHeadModel.from_pretrained(model_name)
 
-    sentence1 = "salut tu vas bien"
+    """sentence1 = "salut tu vas bien"
     probability1 = compute_probability(sentence1, tokenizer, model)
     sentence2 = "saldt uu vadqiffn"
     probability2 = compute_probability(sentence2, tokenizer, model)
     print(sentence1, probability1)
-    print(sentence2, probability2)
-
-
-
-    exit(-1)
-
-
-
-    words = True # if True, compute probabilities with words, else with characters
+    print(sentence2, probability2)"""
 
     filename1 = "SB_bpe1000" # bpe 1000
     name1 = "bpe 1000"
     filename2 = "SB_w2v_7k" # char
     name2 = "char"
-    evaluate(filename1, filename2, name1, name2, words=words)
+    evaluate(filename1, filename2, name1, name2)
     print("---------------------")
-
-    exit(-1)
 
 
     filename1 = "SB_bpe750" # bpe 750
     name1 = "bpe 750"
     filename2 = "SB_w2v_7k" # char
     name2 = "char"
-    evaluate(filename1, filename2, name1, name2, words=words)
+    evaluate(filename1, filename2, name1, name2)
     print("---------------------")
 
     filename1 = "SB_bpe1000" # bpe 1000
     name1 = "bpe 1000"
     filename2 = "SB_bpe750" # bpe 750
     name2 = "bpe 750"
-    evaluate(filename1, filename2, name1, name2, words=words)
+    evaluate(filename1, filename2, name1, name2)
     print("---------------------")
