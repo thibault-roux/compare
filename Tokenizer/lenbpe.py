@@ -11,7 +11,10 @@ def read_vocab(vocab_file):
                 continue
             token, index = line.split('\t')
             len_tokens.append(len(token))
-    plot_len_tokens(len_tokens, vocab_file.split('_')[0])
+    # plot_len_tokens(len_tokens, vocab_file.split('_')[0])
+    with open('hist/' + vocab_file.split(".vocab")[0] + ".csv", 'w') as f:
+        for length in len_tokens:
+            f.write(str(length) + '\n')
 
 # write a function that receives a list of length of tokens and save a plot of the distribution of the length of tokens
 
@@ -28,3 +31,5 @@ def plot_len_tokens(len_tokens, num):
 if __name__ == '__main__':
     read_vocab('1000_bpe.vocab')
     read_vocab('750_bpe.vocab')
+    read_vocab('500.vocab')
+    read_vocab('250_bpe.vocab')
