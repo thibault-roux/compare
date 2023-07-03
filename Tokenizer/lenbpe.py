@@ -36,7 +36,7 @@ def plot_all_len_tokens(len_tokens_all):
     plt.xlabel('Length of tokens')
     plt.ylabel('Frequency')
     plt.title('Distribution of the length of tokens for BPE vocab of size {}'.format(num))
-    plt.savefig("hist/" + num + '.png')
+    plt.savefig("hist/all.png')
     plt.clf()
 
 
