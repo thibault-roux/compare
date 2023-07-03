@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 # write a function that read a bpe vocab file and return a dictionary a list of length of tokens
 
@@ -30,13 +31,16 @@ def plot_len_tokens(len_tokens, num):
     plt.clf()
 
 def plot_all_len_tokens(len_tokens_all):
-    plt.hist(len_tokens_all, bins=10, label=['BPE 1000', 'BPE 750', 'BPE 500', 'BPE 250'])
+    colors = ["#4285f4", "#ea4335", "#fbbc05", "#34a853"]
+    plt.hist(len_tokens_all, bins=np.linspace(0.5, 9.5, 10), label=['BPE 1000', 'BPE 750', 'BPE 500', 'BPE 250'], color=colors)
+    plt.xticks(np.linspace(1, 10, 10))
+    plt.legend()
     # plt.xlim(0, 100)
     plt.ylim(0, 250)
     plt.xlabel('Length of tokens')
     plt.ylabel('Frequency')
     plt.title('Distribution of the length of tokens for BPE')
-    plt.savefig("hist/all.png")
+    plt.savefig("hist/all.svg")
     plt.clf()
 
 
