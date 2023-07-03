@@ -15,6 +15,7 @@ def read_vocab(vocab_file):
     with open('hist/' + vocab_file.split(".vocab")[0] + ".csv", 'w') as f:
         for length in len_tokens:
             f.write(str(length) + '\n')
+    return len_tokens
 
 # write a function that receives a list of length of tokens and save a plot of the distribution of the length of tokens
 
@@ -29,14 +30,13 @@ def plot_len_tokens(len_tokens, num):
     plt.clf()
 
 def plot_all_len_tokens(len_tokens_all):
-    for len_tokens in len_tokens_all:
-        plt.hist(len_tokens, bins=100)
+    plt.hist(len_tokens_all, bins=10, label=['BPE 1000', 'BPE 750', 'BPE 500', 'BPE 250'])
     # plt.xlim(0, 100)
     plt.ylim(0, 250)
     plt.xlabel('Length of tokens')
     plt.ylabel('Frequency')
-    plt.title('Distribution of the length of tokens for BPE vocab of size {}'.format(num))
-    plt.savefig("hist/all.png')
+    plt.title('Distribution of the length of tokens for BPE')
+    plt.savefig("hist/all.png")
     plt.clf()
 
 
