@@ -28,8 +28,24 @@ def plot_len_tokens(len_tokens, num):
     plt.savefig("hist/" + num + '.png')
     plt.clf()
 
+def plot_all_len_tokens(len_tokens_all):
+    for len_tokens in len_tokens_all:
+        plt.hist(len_tokens, bins=100)
+    # plt.xlim(0, 100)
+    plt.ylim(0, 250)
+    plt.xlabel('Length of tokens')
+    plt.ylabel('Frequency')
+    plt.title('Distribution of the length of tokens for BPE vocab of size {}'.format(num))
+    plt.savefig("hist/" + num + '.png')
+    plt.clf()
+
+
+
 if __name__ == '__main__':
-    read_vocab('1000_bpe.vocab')
-    read_vocab('750_bpe.vocab')
-    read_vocab('500.vocab')
-    read_vocab('250_bpe.vocab')
+    len_toks_all = []
+    len_toks_all.append(read_vocab('1000_bpe.vocab'))
+    len_toks_all.append(read_vocab('750_bpe.vocab'))
+    len_toks_all.append(read_vocab('500_bpe.vocab'))
+    len_toks_all.append(read_vocab('250_bpe.vocab'))
+
+    plot_all_len_tokens(len_toks_all)
