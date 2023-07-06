@@ -14,10 +14,30 @@ def common_words(data, filename):
 
     # sort words by frequency
     words2 = OrderedDict(sorted(words1.items(), key=lambda x: x[1], reverse=True))
-    with open("results/" + filename + "_common_words.txt", "a", encoding="utf8") as file:
+    with open("results/" + filename + "_common_words.txt", "w", encoding="utf8") as file:
         for word, freq in words2.items():
             file.write(word + "\t" + str(freq) + "\n")
-    
+
+    chain = "t"
+    with open("data/words_" + chain + ".txt", "w", encoding="utf8") as file:
+        for word, freq in words2.items():
+            if freq >= 10 and chain in word:
+                for index in range(len(word)):
+                    if word[index] == chain:
+                        file.write(word + "\t" + str(freq) + "\n")
+                        print(word, freq)
+                        break
+
+                    # if index > 0:
+                    #     if word[index-1] not in "aeiouyéèà" and word[index] == chain:
+                    #         if index+1 == len(word):
+                    #             file.write(word + "\t" + str(freq) + "\n")
+                    #             print(word, freq)
+                    #             break
+                    #         elif word[index+1] not in "aeiouyéèà":
+                    #             file.write(word + "\t" + str(freq) + "\n")
+                    #             print(word, freq)
+                    #             break
 
 
 if __name__ == "__main__":
@@ -32,5 +52,5 @@ if __name__ == "__main__":
     data2, data3 = intersect(data2, data3)
 
     common_words(data1, filename1)
-    common_words(data2, filename2)
-    common_words(data3, filename3)
+    # common_words(data2, filename2)
+    # common_words(data3, filename3)
