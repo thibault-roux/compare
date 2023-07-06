@@ -67,6 +67,8 @@ if __name__ == "__main__":
     # filename1 = "KD_woR"
     # filename2 = "KD_wR"
 
-    # character_rate("SB_w2v_7k")
-    # character_rate("SB_bpe750")
-    # character_rate("SB_bpe1000")
+    character_rate("SB_w2v_7k")
+    character_rate("SB_bpe250")
+    character_rate("SB_bpe500")
+    character_rate("SB_bpe750")
+    character_rate("SB_bpe1000")

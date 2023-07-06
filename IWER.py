@@ -106,13 +106,16 @@ def select_words(filename):
 
 def eval_on(filename):
     # systems = ["KD_woR","KD_wR","SB_bpe1000","SB_bpe750","SB_s2s","SB_w2v", "SB_w2v_1k","SB_w2v_3k","SB_w2v_7k","SB_xlsr_fr","SB_xlsr"]
-    systems = ["SB_bpe1000","SB_bpe750", "SB_bpe500", "SB_bpe250", "SB_w2v_7k"]
+    # systems = ["SB_w2v_1k", "SB_w2v_3k", "SB_xlsr", "SB_base"]
+    systems = ["SB_bpe750_v2", "SB_bpe250_v3"]
     
     if filename == "ALL":
         with open("csv/words.pkl", "rb") as f:
             words = pickle.load(f)
     else:
         words = select_words(filename)
+
+    print(words)
 
     txt = ""
     for system in systems:
@@ -121,7 +124,7 @@ def eval_on(filename):
         refs, hyps = load_data(system)
         txt += str(iwer(refs, hyps, words)) + "\n"
 
-    with open("results/IWER/iwer_" + filename + ".txt", "w") as f:
+    with open("results/IWER/iwer_" + filename + "2.txt", "w") as f:
         f.write(txt)
     
 
@@ -132,3 +135,4 @@ if __name__ == "__main__":
     # eval_on("words_tant")
 
     eval_on("ALL")
+

@@ -68,6 +68,12 @@ def evaluate(filename1, filename2, name1, name2):
     print(name2, "more probable: ", hyp2_more_probable)
     print("equal: ", equal)
 
+    with open("results/perplexity.txt", "a") as file:
+        file.write(filename1 + " vs " + filename2 + "\n")
+        file.write(name1 + " more probable: " + str(hyp1_more_probable) + "\n")
+        file.write(name2 + " more probable: " + str(hyp2_more_probable) + "\n")
+        file.write("equal: " + str(equal) + "\n")
+
 
 if __name__ == "__main__":
     # in the future, compute different probabilities with different n-grams values
@@ -83,13 +89,13 @@ if __name__ == "__main__":
     print(sentence1, probability1)
     print(sentence2, probability2)"""
 
-    filename1 = "SB_bpe1000" # bpe 1000
+    """filename1 = "SB_bpe1000" # bpe 1000
     name1 = "bpe 1000"
     filename2 = "SB_w2v_7k" # char
     name2 = "char"
     evaluate(filename1, filename2, name1, name2)
     print("---------------------")
-
+    """
 
     filename1 = "SB_bpe750" # bpe 750
     name1 = "bpe 750"
